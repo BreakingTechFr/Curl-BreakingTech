@@ -86,44 +86,51 @@ def format_status_code(status_code):
         return Colors.BLUE + status_code + Colors.RESET
 
 def main():
-    # Effacer le terminal avant d'afficher le logo
-    clear_terminal()
-    
-    # Afficher le logo au démarrage
-    display_logo()
-    
-    url = input("Entrez l'URL que vous souhaitez tester (http ou https) : ").strip()
-    
-    # Vérifier si l'URL commence par http:// ou https://
-    if not url.startswith("http://") and not url.startswith("https://"):
-        print("L'URL doit commencer par 'http://' ou 'https://'.")
-        scheme = input(f"{Colors.ORANGE}Voulez-vous utiliser 'http' ou 'https' ? (Entrez 'http' ou 'https') : {Colors.RESET}").strip().lower()
-
-        if scheme in ['http', 'https']:
-            url = scheme + "://" + url
-        else:
-            print("Schéma non reconnu. Utilisation de 'https://' par défaut.")
-            url = "https://" + url
-    
-    # Obtenir le statut de l'URL initiale
-    initial_status = get_initial_status(url)
-    
-    if initial_status:
-        print(f"Statut de l'URL de base ({url}) : {format_status_code(initial_status)}")
-    
-    # Obtenir les redirections
-    redirections = get_redirections(url)
-    
-    if redirections:
-        print("\nListe des redirections :")
-        for i, (redirect_url, status_code) in enumerate(redirections[:-1]):
-            print(f"Redirection {i + 1} : URL = {redirect_url}, Statut HTTP = {format_status_code(status_code)}")
+    while True:
+        # Effacer le terminal avant d'afficher le logo
+        clear_terminal()
         
-        # Dernière URL et son statut
-        final_url, final_status = redirections[-1]
-        print(f"\nURL finale : {final_url}, Statut HTTP = {format_status_code(final_status)}")
-    else:
-        print("Aucune redirection trouvée ou erreur lors de la requête.")
+        # Afficher le logo au démarrage
+        display_logo()
+        
+        url = input("Entrez l'URL que vous souhaitez tester (http ou https) : ").strip()
+        
+        # Vérifier si l'URL commence par http:// ou https://
+        if not url.startswith("http://") and not url.startswith("https://"):
+            print("L'URL doit commencer par 'http://' ou 'https://'.")
+            scheme = input(f"{Colors.ORANGE}Voulez-vous utiliser 'http' ou 'https' ? (Entrez 'http' ou 'https') : {Colors.RESET}").strip().lower()
+
+            if scheme in ['http', 'https']:
+                url = scheme + "://" + url
+            else:
+                print("Schéma non reconnu. Utilisation de 'https://' par défaut.")
+                url = "https://" + url
+        
+        # Obtenir le statut de l'URL initiale
+        initial_status = get_initial_status(url)
+        
+        if initial_status:
+            print(f"Statut de l'URL de base ({url}) : {format_status_code(initial_status)}")
+        
+        # Obtenir les redirections
+        redirections = get_redirections(url)
+        
+        if redirections:
+            print("\nListe des redirections :")
+            for i, (redirect_url, status_code) in enumerate(redirections[:-1]):
+                print(f"Redirection {i + 1} : URL = {redirect_url}, Statut HTTP = {format_status_code(status_code)}")
+            
+            # Dernière URL et son statut
+            final_url, final_status = redirections[-1]
+            print(f"\nURL finale : {final_url}, Statut HTTP = {format_status_code(final_status)}")
+        else:
+            print("Aucune redirection trouvée ou erreur lors de la requête.")
+        
+        # Demander à l'utilisateur s'il souhaite analyser une autre URL ou quitter
+        choice = input(f"\n Souhaitez-vous analyser une autre URL ? (Entrez '1' pour continuer ou '2' pour quitter) : ").strip().lower()
+        if choice != '1':
+            print("Merci d'avoir utilisé l'application. Au revoir !")
+            break
 
 if __name__ == "__main__":
     main()
