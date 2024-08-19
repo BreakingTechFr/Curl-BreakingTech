@@ -1,13 +1,13 @@
 # Curl-BreakingTech
 
-![Capture d’écran 2024-08-19 à 09 17 42](https://github.com/user-attachments/assets/7dcb7f84-ee46-438e-9ba2-15ec68dfba22)
-
+![Capture d’écran 2024-08-19 à 09 19 09](https://github.com/user-attachments/assets/0a05faea-b578-43cc-a479-8f67668b586b)
 
 Cet outil vous permet de connaitre le statut d'une url ainsi que l'ensemble des redirections de cette url avec leur statut. 
 
 # Utilisation :
 - Installez les dépendances avec la commande :
-```shell
+```shell![Capture d’écran 2024-08-19 à 09 19 09](https://github.com/user-attachments/assets/3a408e51-26b6-4ec0-9738-cd11918b4f17)
+
 pip install requirements.txt
 ```
 - Lancez le fichier curl.py en utilisant la commande :
