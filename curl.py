@@ -1,5 +1,6 @@
 import subprocess
 import re
+import os
 
 # Définition des couleurs
 class Colors:
@@ -10,6 +11,10 @@ class Colors:
     BLUE = '\033[94m'
     RESET = '\033[0m'
     ORANGE = '\033[38;5;208m'
+
+def clear_terminal():
+    """Efface le terminal en fonction du système d'exploitation."""
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def display_logo():
     logo = """
@@ -41,7 +46,7 @@ def get_initial_status(url):
 def get_redirections(url):
     try:
         # Exécuter la commande curl avec les options nécessaires pour suivre les redirections
-        result = subprocess.run(['curl', '-I', '-s', '-L', '-o', '/dev/null', '-w', '%{url_effective} %{http_code}\\n', url],
+        result = subprocess.run(['curl', '-s', '-L', '-w', '%{url_effective} %{http_code}\\n', '-o', '/dev/null', url],
                                 capture_output=True, text=True)
         
         # Récupérer la sortie
@@ -60,8 +65,11 @@ def get_redirections(url):
 
         return redirections
     
-    except Exception as e:
+    except subprocess.CalledProcessError as e:
         print(f"Erreur lors de l'exécution de curl pour les redirections : {e}")
+        return []
+    except Exception as e:
+        print(f"Erreur inattendue lors de l'exécution de curl pour les redirections : {e}")
         return []
 
 def format_status_code(status_code):
@@ -78,6 +86,9 @@ def format_status_code(status_code):
         return Colors.BLUE + status_code + Colors.RESET
 
 def main():
+    # Effacer le terminal avant d'afficher le logo
+    clear_terminal()
+    
     # Afficher le logo au démarrage
     display_logo()
     
