@@ -17,7 +17,9 @@ Bleu pour les autres cas
 
 # Utilisation :
 - Copier les fichiers sources
+```shell
 git clone https://github.com/BreakingTechFr/Curl-BreakingTech.git
+``` 
 - Installez les dépendances avec la commande :
 ```shell![Capture d’écran 2024-08-19 à 09 19 09](https://github.com/user-attachments/assets/3a408e51-26b6-4ec0-9738-cd11918b4f17)
 pip install requirements.txt
